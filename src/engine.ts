@@ -1,5 +1,5 @@
-import { AsciiRenderer } from "./renderer";
-import { World, type SharkSpec } from "./world";
+import { AsciiRenderer, type Theme } from "./renderer";
+import { World, type RaptorSpec } from "./world";
 
 const STEP = 1 / 60;
 const MAX_STEPS = 4;
@@ -8,7 +8,7 @@ const MAX_STEPS = 4;
  * Wires World + AsciiRenderer to a canvas: fixed-timestep loop, resize,
  * pointer input, pausing off-screen, and prefers-reduced-motion.
  */
-export class OceanEngine {
+export class SkyEngine {
   private world: World;
   private renderer: AsciiRenderer;
   private raf = 0;
@@ -20,8 +20,8 @@ export class OceanEngine {
   private intersectionObserver: IntersectionObserver;
   private disposed = false;
 
-  constructor(private canvas: HTMLCanvasElement, sharks?: SharkSpec[]) {
-    this.world = new World(sharks);
+  constructor(private canvas: HTMLCanvasElement, raptors?: RaptorSpec[]) {
+    this.world = new World(raptors);
     this.renderer = new AsciiRenderer(canvas);
     this.renderer.setFontFamily(getComputedStyle(canvas).fontFamily);
     this.reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -46,6 +46,12 @@ export class OceanEngine {
       if (!this.disposed && this.reducedMotion.matches) this.drawStill();
     });
     this.schedule();
+  }
+
+  setTheme(theme: Theme) {
+    this.renderer.setTheme(theme);
+    // No loop runs under reduced motion, so repaint the still frame now.
+    if (this.reducedMotion.matches) this.drawStill();
   }
 
   destroy() {
@@ -126,7 +132,7 @@ export class OceanEngine {
 
   private onPointerDown = (e: PointerEvent) => {
     const { x, y, inside } = this.toLocal(e);
-    if (inside && !this.reducedMotion.matches) this.world.splash(x, y);
+    if (inside && !this.reducedMotion.matches) this.world.scare(x, y);
   };
 
   private onPointerLeave = () => {

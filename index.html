@@ -3,16 +3,36 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ascii sharks</title>
+    <title>ascii birds</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@600&display=swap" rel="stylesheet" />
+    <script>
+      // Set the theme before first paint so the page never flashes the wrong sky.
+      (() => {
+        let saved = null;
+        try { saved = localStorage.getItem("ascii-birds-theme"); } catch {}
+        const theme = saved === "light" || saved === "dark" ? saved : matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <style>
-      html, body { margin: 0; height: 100%; background: #000; }
+      :root { --sky: #000; --ink: rgba(230, 238, 255, 0.75); --chip: rgba(255, 255, 255, 0.08); color-scheme: dark; }
+      :root[data-theme="light"] { --sky: #e9e6de; --ink: rgba(18, 22, 34, 0.75); --chip: rgba(0, 0, 0, 0.06); color-scheme: light; }
+      html, body { margin: 0; height: 100%; background: var(--sky); }
       canvas { display: block; width: 100vw; height: 100vh; font-family: "Geist Mono", ui-monospace, Menlo, monospace; }
+      .theme-toggle {
+        position: fixed; top: 16px; right: 16px; z-index: 1;
+        font: 600 13px "Geist Mono", ui-monospace, Menlo, monospace;
+        color: var(--ink); background: var(--chip); backdrop-filter: blur(6px);
+        border: 1px solid currentColor; border-radius: 6px; padding: 6px 10px; cursor: pointer;
+      }
+      .theme-toggle:hover { color: var(--sky); background: var(--ink); }
+      .theme-toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
     </style>
   </head>
   <body>
     <canvas aria-hidden="true"></canvas>
+    <button class="theme-toggle" type="button"></button>
     <script type="module" src="/demo.ts"></script>
   </body>
 </html>

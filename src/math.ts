@@ -35,19 +35,19 @@ export function hash3(x: number, y: number, z: number) {
 const K1 = 1 / 260;
 const K2 = 1 / 310;
 const K3 = 1 / 190;
-const CURRENT_SCALE = 3400;
+const WIND_SCALE = 3400;
 
 /**
- * Divergence-free ocean current: the curl of a slowly drifting stream
- * function ψ(x, y, t). Because it has no sources or sinks, it moves the
- * schools around without bunching them up in one corner.
+ * Divergence-free wind: the curl of a slowly drifting stream function
+ * ψ(x, y, t). Because it has no sources or sinks, it pushes the flocks
+ * around without bunching them up in one corner.
  */
-export function current(x: number, y: number, t: number, out: { x: number; y: number }) {
+export function wind(x: number, y: number, t: number, out: { x: number; y: number }) {
   const a = x * K1 + t * 0.07;
   const b = y * K2 - t * 0.05;
   const c = (x + y) * K3 + t * 0.11;
   // u = ∂ψ/∂y, v = -∂ψ/∂x with ψ = sin(a)cos(b) + 0.5 sin(c)
-  out.x = (-K2 * Math.sin(a) * Math.sin(b) + 0.5 * K3 * Math.cos(c)) * CURRENT_SCALE;
-  out.y = (-K1 * Math.cos(a) * Math.cos(b) - 0.5 * K3 * Math.cos(c)) * CURRENT_SCALE;
+  out.x = (-K2 * Math.sin(a) * Math.sin(b) + 0.5 * K3 * Math.cos(c)) * WIND_SCALE;
+  out.y = (-K1 * Math.cos(a) * Math.cos(b) - 0.5 * K3 * Math.cos(c)) * WIND_SCALE;
   return out;
 }

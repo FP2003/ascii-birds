@@ -3,53 +3,53 @@ export interface Species {
   cruise: number;
   maxSpeed: number;
   minSpeed: number;
-  /** Relative odds of a new school being this species. */
+  /** Relative odds of a new flock being this species. */
   weight: number;
-  schoolSize: [number, number];
-  /** Personal space in grid cells (x, y), so every fish gets its own glyph. */
+  flockSize: [number, number];
+  /** Personal space in grid cells (x, y), so every bird gets its own glyph. */
   spacing: [number, number];
   // Behaviour weights. Different mixes produce different collective shapes
-  // (Couzin et al. 2002): strong alignment gives polarised schools and
-  // ribbons, low alignment gives swarms, and a tangential pull gives a mill.
+  // (Couzin et al. 2002): strong alignment gives polarised flocks and
+  // ribbons, low alignment gives swarms, and a tangential pull gives a swirl.
   align: number;
   cohesion: number;
   jitter: number;
-  /** Tangential pull around the local centre: >0 makes a rotating bait ball. */
+  /** Tangential pull around the local centre: >0 makes a rolling murmuration. */
   mill: number;
-  /** Damps vertical speed; real fish mostly cruise level. */
-  verticalDrag: number;
+  /** Share of the time spent flapping: 1 never stops, lower glides between bursts. */
+  flapDuty: number;
 }
 
 export const SPECIES: Species[] = [
   {
-    name: "sardine",
+    name: "starling",
+    cruise: 44, maxSpeed: 76, minSpeed: 24, weight: 4,
+    flockSize: [22, 36], spacing: [1.6, 1],
+    align: 2.6, cohesion: 1.5, jitter: 30, mill: 60, flapDuty: 1,
+  },
+  {
+    name: "swallow",
+    cruise: 54, maxSpeed: 92, minSpeed: 30, weight: 2,
+    flockSize: [6, 12], spacing: [2.4, 1.4],
+    align: 0.6, cohesion: 0.7, jitter: 120, mill: 0, flapDuty: 0.5,
+  },
+  {
+    name: "sparrow",
     cruise: 36, maxSpeed: 64, minSpeed: 18, weight: 3,
-    schoolSize: [18, 28], spacing: [1.8, 1.1],
-    align: 1.6, cohesion: 1.6, jitter: 40, mill: 70, verticalDrag: 0.5,
+    flockSize: [10, 18], spacing: [1.8, 1.1],
+    align: 1.4, cohesion: 1.6, jitter: 60, mill: 0, flapDuty: 1,
   },
   {
-    name: "anchovy",
-    cruise: 46, maxSpeed: 78, minSpeed: 22, weight: 3,
-    schoolSize: [20, 32], spacing: [1.5, 1],
-    align: 3.2, cohesion: 0.45, jitter: 30, mill: 0, verticalDrag: 1.4,
+    name: "finch",
+    cruise: 40, maxSpeed: 68, minSpeed: 20, weight: 2,
+    flockSize: [8, 14], spacing: [2, 1.2],
+    align: 2, cohesion: 1, jitter: 45, mill: 0, flapDuty: 0.6,
   },
   {
-    name: "silverside",
-    cruise: 40, maxSpeed: 70, minSpeed: 20, weight: 3,
-    schoolSize: [12, 20], spacing: [2, 1.1],
-    align: 2.4, cohesion: 1.1, jitter: 35, mill: 0, verticalDrag: 1.6,
-  },
-  {
-    name: "mackerel",
-    cruise: 32, maxSpeed: 60, minSpeed: 16, weight: 2,
-    schoolSize: [5, 9], spacing: [2.6, 1.3],
-    align: 2, cohesion: 0.9, jitter: 25, mill: 0, verticalDrag: 2,
-  },
-  {
-    name: "goby",
-    cruise: 26, maxSpeed: 56, minSpeed: 10, weight: 1,
-    schoolSize: [8, 12], spacing: [1.4, 1.1],
-    align: 0.35, cohesion: 1.4, jitter: 110, mill: 0, verticalDrag: 0.3,
+    name: "pigeon",
+    cruise: 48, maxSpeed: 80, minSpeed: 24, weight: 1,
+    flockSize: [6, 10], spacing: [2.6, 1.5],
+    align: 3, cohesion: 0.9, jitter: 25, mill: 25, flapDuty: 0.8,
   },
 ];
 

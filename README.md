@@ -1,33 +1,47 @@
-# ascii sharks
+# ascii birds
 
 ```
-                            ;'
-                             %%'
-                              .t;.               .oooo
-                               S;:S%              %8S8.
-                                ;:tt%t '..        XX%%S
-t'                            ''XSSS8SSX%XX8#.    %XSX%
- :;'               ;.''X8%8XX%%S%%S%SStt%tSX8S#X8't%ttt.
-  ::%'       ''8XXXSSt%Stttttt%8@%%@%8@8%Sttt%%%%SSSSS%tt.
-  'SXXtt%t%%%S%:;StS%ttSS%tSXSt88@@%8%@8%tStS%%X%SS%%S%;;t
- .@##88#@...'@@@@#@8@88X88#XXXSX8SX88SX8%SS%S%%S88St%t%%%.
-  %;%t             :.    '.'##@###@X#888XX##8@@@#.X%XS%.
- .%t                            ;%%%#@@##@@@.     SXS%%
- t.                            .%;%%%.            %%XXS
-                              '%t:t              .SXSS'
-                             '::.                ooooo
-                            .S'
-                            .
+                              .;S;.
+                              %@8#%
+                              '8S8'
+         .,;;:;:tt%%SSS%%%tt%SX88XS%tt%%%SSS%%tt:;:;;,.
+    .';tt%S88##@@#8X%%t;;;:;tSX8@@8XSt;;:;;t%%X8#@@##88S%tt;'.
+ '::%S8@@#S%t;:'.     ''::;tS8@##@8St;::''      .':;t%S#@@8S%::'
+  ' ' ;'  ''               'tS8@@8St'               ''  '; ' '
+                            :%S88S%:
+                            ;tX88Xt;
+                           ;tS%XX%St;
+                          ;%t;'  ';t%;
+                          '        '
+
+        v  -  ^       v    -   v  ^     -  v
+     ^   v   v  -  ^     v  ^    -   v
 ```
 
-Fish and sharks drawn as ASCII on a canvas. Zero dependencies.
+Small-bird flocks and the raptors that hunt them, drawn as ASCII on a canvas. Zero dependencies.
+
+Forked from ascii sharks: the fish schools are now
+flocks of starlings, swallows, sparrows, finches and pigeons, and the sharks are now raptors
+seen from below. Raptors soar and glide between bursts of wingbeats, flap hard on the hunt,
+and (the falcon especially) fold into a stoop on the final approach. Click to scare a flock.
 
 ```sh
 npm install && npm run dev
 ```
 
 ```ts
-import { OceanEngine } from "./src";
+import { SkyEngine } from "./src";
 
-const engine = new OceanEngine(canvas, [{ kind: "hammerhead", size: 1 }]);
+const engine = new SkyEngine(canvas, [{ kind: "eagle", size: 1 }]);
+engine.setTheme("light"); // or "dark"
 ```
+
+React:
+
+```tsx
+import { AsciiSky } from "./src/react";
+
+<AsciiSky raptors={[{ kind: "falcon", size: 1 }]} theme="light" />
+```
+
+Raptors: `hawk`, `falcon`, `eagle`, `kite`, `osprey`, `owl`. The default sky mixes eagle, kite, hawk, owl and falcon at different sizes; try `?raptors=eagle,falcon,kite,owl` in the demo for your own lineup (the first is biggest, the rest step down). The demo has a light/dark toggle that remembers your choice.
